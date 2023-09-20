@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('TUsers', function (Blueprint $table) {
+        Schema::create('TPresences', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->unsignedBigInteger('fk_activity_candidat');
+            $table->foreign('fk_activity_candidat')->references('id')->on('TActivity_candidats');
+            $table->boolean('status')->nullable()->default(false);
+            $table->timestamps(); 
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('TUsers');
+        Schema::dropIfExists('TPresences');
     }
 };
